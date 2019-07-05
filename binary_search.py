@@ -6,11 +6,11 @@ def binary_search(arr, val)-> int:
     while low <= high:
         mid = int((low + high) / 2)
         guess = arr[mid]
+        if guess == val:
+            return mid
         if guess < val:
             low = mid + 1
-        elif guess > val:
-            high = mid - 1
         else:
-            return mid
-    return
+            high = mid - 1
+    return None
     
