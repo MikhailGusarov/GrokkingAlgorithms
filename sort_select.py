@@ -1,4 +1,5 @@
-def find_smallest(arr):
+def find_smallest(arr: list) -> int:
+    """Поиск наименьшего числа"""
     smallest = arr[0]
     small_index = 0
     for i in range(1, len(arr)):
@@ -8,7 +9,8 @@ def find_smallest(arr):
     return small_index
 
 
-def selection_sort(arr):
+def selection_sort(arr: list) -> list:
+    """Выборочная сортировка"""
     sort_arr = []
     for i in range(0, len(arr)):
         sort_arr.append(arr.pop(find_smallest(arr)))

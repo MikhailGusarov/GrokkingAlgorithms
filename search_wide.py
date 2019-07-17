@@ -14,7 +14,7 @@ def search_wide(graph: dict, start: str, end: str) -> str:
 
 def search_wide2(graph: dict, start: str, end: str) -> list:
     """Поиск в ширину с выводом кратчайшего пути"""
-    arr = [[start,start]]  # очередь (шаг пути)
+    arr = [[start, start]]  # очередь (шаг пути)
     arr_search = []  # список просмотренных вершин графа
     arr_line = []  # список пройденных ребер 
     while arr:
@@ -25,7 +25,7 @@ def search_wide2(graph: dict, start: str, end: str) -> list:
             arr_res = [end]
             arr_line = {i[0]: i[1] for i in arr_line}  # преобразуем список в словарь
             while arr_line[end_step] != start:  # пока не дойдем до start
-                arr_res.append(arr_line[end_step]) # добавляем шаги пути задом наперед
+                arr_res.append(arr_line[end_step])  # добавляем шаги пути задом наперед
                 end_step = arr_line[end_step]
             arr_res.append(start)
             arr_res.reverse()
@@ -34,8 +34,9 @@ def search_wide2(graph: dict, start: str, end: str) -> list:
             arr_search.append(step[0])  # добавить эллемент в список
             arr_line.append(step)  # добавить просмотренное ребро
             for i in graph[step[0]]:
-                arr.append([i,step[0]])  # добавить всех соседей в очередь
+                arr.append([i, step[0]])  # добавить всех соседей в очередь
     return 'Говно'  # если очередь опустела, то пути нет
+
 
 graph_initial = {
     'A': ['B', 'F'],
@@ -48,9 +49,9 @@ graph_initial = {
     'H': ['G']}
 
 
-start = 'A'
-end = 'K'
+start1 = 'A'
+end1 = 'K'
 
 
-search_wide(graph_initial, start, end)
-print(search_wide2(graph_initial, start, end))
+search_wide(graph_initial, start1, end1)
+print(search_wide2(graph_initial, start1, end1))

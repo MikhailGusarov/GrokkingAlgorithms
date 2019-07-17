@@ -1,4 +1,4 @@
-def binary_search(arr, val)-> int:
+def binary_search(arr: list, val: int) -> int:
     """Бинарный поиск, возвращает номер val в списке arr"""
     low = 0
     high = len(arr) - 1
@@ -13,4 +13,4 @@ def binary_search(arr, val)-> int:
         else:
             high = mid - 1
     return None
-    
+
