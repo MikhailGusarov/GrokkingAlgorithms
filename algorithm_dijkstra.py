@@ -1,4 +1,4 @@
-def algorithm_dijkstra(graph: dict, start: str, end: str) -> None:
+def algorithm_dijkstra(graph: dict, start: str, end: str) -> list:
     """Алгоритм Дейкстры"""
     processed = []  # проверенные вершины
     costs = graph[start].copy()  # цены на тек. проверке
@@ -6,11 +6,27 @@ def algorithm_dijkstra(graph: dict, start: str, end: str) -> None:
     if end not in costs.keys():
         costs[end] = float("inf")
         parent[end] = None
-    min_in_dict(costs, processed)
+    step = min_in_dict(costs, processed)
+    while step:
+        for k, v in graph[step].items():
+            if k not in costs or costs[k] > v + costs[step]:
+                costs[k] = v + costs[step]
+                parent[k] = step
+        processed.append(step)
+        step = min_in_dict(costs, processed)
+    res = [end]
+    step_parent = end
+    while parent[step_parent] != start:
+        res.append(parent[step_parent])
+        step_parent = parent[step_parent]
+    res.append(start)
+    res.reverse()
+    return res
 
 
 def min_in_dict(costs: dict, processed: list) -> str:
     min_val = float('inf')
+    res = None
     for k, v in costs.items():
         if k not in processed and v < min_val:
             res = k
@@ -18,10 +34,13 @@ def min_in_dict(costs: dict, processed: list) -> str:
     return res
 
 
+graph1 = {'S': {'A': 4, 'B': 10},
+          'A': {'C': 21},
+          'B': {'D': 5, 'E': 8},
+          'D': {'C': 5},
+          'E': {'C': 12},
+          'C': {'F': 4},
+          'F': {}
+          }
 
-graph1 = {'S': {'A': 6, 'B': 2},
-          'A': {'E': 1},
-          'B': {'A': 3, 'E': 5},
-          'E': {}}
-
-algorithm_dijkstra(graph1, 'S', 'E')
+print(algorithm_dijkstra(graph1, 'S', 'F'))
