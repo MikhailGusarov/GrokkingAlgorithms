@@ -1,30 +1,33 @@
-def greedy_algorithm(states_needed: set, stations: dict)-> set:
+def greedy_algorithm(states_needed: set, stations: dict) -> (set, None):
+    """Принимает множество штатов и словарь станций с обхватом этих штатов.
+    На выходе множество станций, для обхвата всех штатов жадным алгоритмом"""
     final_station = set()
-    best_station = None
-    while states_needed != set():
+    while states_needed != set():  # пока все штаты без покрытия станций
         best_station = get_best_station(states_needed, stations, final_station)
-        if best_station is None:
-            return None
-        states_needed = states_needed - stations[best_station]
-        final_station.add(best_station)
+        if best_station is None:  # если лучшей станции нет
+            return
+        states_needed = states_needed - stations[best_station]  # убираем штаты станции из начального списка
+        final_station.add(best_station)  # добавляем станцию в результирующий сеттер
     return final_station
 
 
-def get_best_station(states_needed: set, stations: dict, final_station: set) -> str:
+def get_best_station(states_needed: set, stations: dict, final_station: set) -> (str, None):
+    """Вывод лучшей станции из ещё непросмотренных"""
     best_station = None
     count_states = 0
     for k, v in stations.items():
-        if len(v.intersection(states_needed)) > count_states and k not in final_station:
+        # если пересечение по штатам наибольшее и станция не просмотренна
+        if len(v & states_needed) > count_states and k not in final_station:
             best_station = k
             count_states = len(v.intersection(states_needed))
     return best_station
         
 
-states_needed = {'mt', 'wa', 'or', 'id', 'nv', 'ut', 'ca', 'az'}
-stations = {'kone': {'id', 'nv', 'ut'},
-            'ktwo': {'wa', 'id', 'mt'},
-            'kthree': {'or', 'nv', 'ca'},
-            'kfour': {'nv', 'ut'},
-            'kfive': {'ca', 'az'}}
+states = {'mt', 'wa', 'or', 'id', 'nv', 'ut', 'ca', 'az'}
+stations_s = {'k_one': {'id', 'nv', 'ut'},
+              'k_two': {'wa', 'id', 'mt'},
+              'k_three': {'or', 'nv', 'ca'},
+              'k_four': {'nv', 'ut'},
+              'k_five': {'ca', 'az'}}
 
-print(greedy_algorithm(states_needed, stations))
+print(greedy_algorithm(states, stations_s))
